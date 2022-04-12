@@ -1,0 +1,137 @@
+.login-page {
+  height: 100vh;
+  width: 100vw;
+  background-color: #181c2c;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+  background-image: url(../../../images/background3.svg);
+  background-size: cover;
+}
+
+#login-box {
+  width: 70vw;
+  height: 75vh;
+  background-color: #202434;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  -webkit-box-shadow: 25px 25px 10px 0px rgba(0, 0, 0, 0.242);
+          box-shadow: 25px 25px 10px 0px rgba(0, 0, 0, 0.242);
+  position: relative;
+}
+
+#image-side {
+  width: 50%;
+  height: 75vh;
+  background-image: url(../../../images/background2.svg);
+  background-size: cover;
+}
+
+#login-side {
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#login-side input {
+  width: 80%;
+  background-color: #181c2c;
+  min-height: 50px;
+  height: auto;
+  max-height: 200px;
+  overflow: auto;
+  color: white;
+  border: 0px solid #FA7268;
+  border-radius: 10px;
+  font-size: 16px;
+  padding-left: 20px;
+  outline: none;
+}
+
+#login-side div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+
+#login-side #remember {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 80%;
+  margin-top: 10px;
+  margin-left: -20px;
+}
+
+#login-side #login-button {
+  color: white;
+  background-color: #FA7268;
+  width: 80%;
+}
+
+#login-side #register-link {
+  color: white;
+}
+
+#login-side #error {
+  color: #f7584d;
+  position: absolute;
+  bottom: 15px;
+}
+
+#input-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: auto;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+/*# sourceMappingURL=styles.css.map */

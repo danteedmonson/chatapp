@@ -1,0 +1,293 @@
+$background-dark :  #181c2c;
+$background-light :  #202434;
+$primary : #FA7268;
+
+@mixin gridPosition($cs, $ce, $rs, $re) {
+    grid-column-start: $cs;
+    grid-column-end: $ce;
+    grid-row-start: $rs;
+    grid-row-end: $re;
+}
+
+@mixin flexPosition($justify, $align) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+
+#infobar {
+    
+    height:100%;
+    background-color: $background-light;
+    box-shadow: 20px 20px 10px 0px rgba(0, 0, 0, 0.125);
+    @include flexPosition(center, flex-start);
+    @include gridPosition(3, 7, 1, 2);
+}
+
+#sidebar {
+    height: 94vh;
+    min-width:20vw;
+    @include flexPosition(space-between, flex-start);
+    flex-direction: column;
+}
+
+#filebar {
+    height:100%;
+    background-color: $background-light;
+    box-shadow: 20px 20px 10px 0px rgba(0, 0, 0, 0.125);
+    @include flexPosition(center, center);
+    @include gridPosition(7, 9, 1, 4);
+}
+
+#members-section {
+    height:100%;
+    background-color: $background-light;
+    box-shadow: 20px 20px 10px 0px rgba(0, 0, 0, 0.125);
+    @include flexPosition(center, center);
+    @include gridPosition(7, 9, 4, 7);
+}
+
+
+#message-area {
+    background-color: $background-light;
+    height: 100%;
+    border-radius: 5px;
+    @include flexPosition(flex-start, flex-start);
+    flex-direction: column;
+    align-self: flex-end;
+    box-shadow: 20px 20px 10px 0px rgba(0, 0, 0, 0.125);
+    @include gridPosition(3, 7, 2, 7);
+    
+}
+
+#input-area{
+    @include flexPosition(center, flex-end);
+    width: 100%;
+    height: auto;
+    #txtA {
+        width: 40vw;
+        background-color: $background-dark;
+        min-height:50px;
+        overflow-y: auto;
+        color:white;
+        border: 2px solid $primary;
+        border-radius: 30px;
+        font-size: 16px;
+       @include flexPosition( center, flex-start );
+       flex-direction: column;
+        overflow-wrap:normal;
+        overflow-x: hidden;
+        padding-bottom: -10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        transition-property: padding;
+        transition-duration: 0.2s;
+        transition-timing-function: ease-in-out;
+        margin: 10px;
+        outline: none;
+    }
+    textarea {
+       
+        resize: none;
+        margin-top:10px;
+        margin-bottom:10px;
+
+        background-color: transparent;
+        outline: none;
+        color:white;
+        border: 0px solid transparent;
+        font-size: 16px;
+    }
+}
+
+#search-user {
+    border: 1px solid white;
+    width:55%;
+    border-radius: 10px;
+    padding-left: 20px;
+    position:relative;
+    height: 50px;
+    @include flexPosition(flex-start, flex-start );
+    input{
+        resize: none;
+        margin:10px;
+        background-color: transparent;
+        height: 25px;
+        width:80%;
+        outline: none;
+        color:white;
+        font-size: 16px;
+        border: 0px solid white;
+    }     
+}
+
+#search-button {
+    color:white
+}
+
+#message-box {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    transition-property: overflow;
+    transition-timing-function: ease-in-out;
+    transition-duration: 1s;
+    
+}
+
+
+#send-button, #file-button, .buttons {
+    background-color: $background-dark;
+    height:50px;
+    width:50px;
+    color:white;
+    border: 2px solid $primary;
+    border-radius: 30px;
+    margin: 10px;
+}
+
+#add-button {
+    background-color: $background-dark;
+    height:50px;
+    width:50px;
+    color:white;
+    border-radius: 30px;
+    margin: 10px;
+    transition-property:transform;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.2s;
+}
+
+
+.message-item-enter-active {
+    opacity: 0;
+    transition: opacity 700ms ease-out;
+}
+
+
+.message {
+    max-width:100%;
+    display: flex;
+    padding: 30px;
+    padding-top: 50px; 
+}
+
+#pfp{
+    height: 45px;
+    width:45px;
+    background-color: black;
+    border-radius:  30px;
+    margin-right: 15px;
+}
+
+#bubble {
+    min-height: 50px;
+    height: auto;
+    min-width:100px;
+    max-width: 300px;
+    background-color: $background-dark;
+    border: 2px solid $primary;
+    border-radius: 0 30px 30px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    overflow-wrap: break-word;    
+}
+
+#pfp-sender {
+    height: 45px;
+    width:45px;
+    background-color: black;
+    border-radius:  30px;
+    margin-left: 15px;
+}
+
+#bubble-sender {
+    min-height: 50px;
+    min-width:100px;
+    max-width: 300px;
+    background-color: $primary;
+    border-radius: 30px 0 30px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    padding-left: 20px;
+
+}
+
+ #messages-section, #group-section, #profile-section{
+    height: 100%;
+    width: 100%;
+    background-color: $background-light;
+    box-shadow: 20px 20px 10px 0px rgba(0, 0, 0, 0.125);
+    @include flexPosition(center, center);
+    flex-direction: column;
+    position: relative;
+}
+
+#profile-section{
+    @include gridPosition(1, 3, 1, 3);
+    overflow: hidden
+}
+
+#messages-section{
+    @include gridPosition(1, 3, 3, 5)
+}
+
+#group-section{
+    @include gridPosition(1, 3, 5, 7)
+}
+
+
+
+#my-pfp {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+#dash {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(8, 11vw);
+    grid-template-rows: repeat(6, 14vh);
+    gap: 24px;
+    background-color: $background-dark;
+    color:white;
+    padding-bottom: 3vh;
+  }
+
+  #searched-contacts {
+      width: 90%;
+      color:white;
+      min-height: 50px;
+      background-color: $background-dark;
+      border-radius: 9px;
+      margin: 4px;
+      padding-left: 20px;
+      @include flexPosition(flex-start, center)
+
+  }
+
+
+
+
+  #dash *::-webkit-scrollbar{
+    width: 8px;
+    height: 8px;
+  }
+  #dash *::-webkit-scrollbar-track{
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+  }
+  #dash *::-webkit-scrollbar-thumb {
+    background-color: #dfdfdf;
+    border-radius: 10px;
+  }
+
