@@ -4,7 +4,8 @@ import { Button } from '@material-ui/core';
 import { SocketContext } from '../../../App';
 
 export default function Profile(props: any) {
-  const [message, setMessage] = useState('');
+  const [changePFP, setChangePFP] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const pfpRef = useRef<any>(null)
   const [preview, setPreview] = useState<any>(null)
   const [pfp, setPfp] = useState('undefinedpyvcfajcBlack_png')
@@ -81,6 +82,16 @@ export default function Profile(props: any) {
 
   }
 
+  function handleEditMode () {
+    pfpRef.current.click()
+    setEditMode(true)
+  }
+
+  function cancelEdit() {
+    setEditMode(false)
+    setPreview(null)
+  }
+
 
   return (
 
@@ -88,18 +99,36 @@ export default function Profile(props: any) {
 
       <input type="file" onChange={loadFile} hidden ref={pfpRef}></input>
       <div style={{ display: "flex", width: "92%", justifyContent: "space-between" }}>
-        <h3 style={{ display: "inline" }}>{username}</h3>
+        <h3 style={{ display: "inline" }}>PROFILE</h3>
       </div>
       <div style={{ overflow: "auto", width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center" }}>
 
         <div
           id="my-pfp"
-          onClick={() => pfpRef.current.click()}
-          style={{ backgroundImage: preview ? `url(${preview})` : `url(https://danteedmonson-chatapp.s3.amazonaws.com/${pfp})`, backgroundSize: "cover" }}>
+          onClick={handleEditMode}
+          onMouseOver={()=>setChangePFP(true)}
+          onMouseLeave={()=>setChangePFP(false)}
+          style={{ backgroundImage: preview ? `url(${preview})` : `url(https://danteedmonson-chatapp.s3.amazonaws.com/${pfp})`, backgroundSize: "cover", overflow:"hidden" }}>
+
+    
+          { 
+           changePFP && 
+           <div style={{width:"100%", height:"100%", backgroundColor:"rgba(0,0,0,0.5)", display:"flex", justifyContent:"center", alignItems:"center", cursor:"pointer"}}>
+              <h5>Change Avatar</h5>
+            </div>
+          }
         </div>
+        <h5>{username}</h5>
       </div>
 
-      <Button onClick={uploadImage}>save</Button>    </div>
+    {
+      editMode &&
+      <div style={{ display: "flex", justifyContent:"flex-end", width:"95%", marginBottom:"6px"}}>
+        <Button onClick={cancelEdit} style={{color:"red"}}>cancel</Button>
+        <Button onClick={uploadImage} style={{color:"white", border:"1px solid white"}}>save</Button>
+      </div>
+    }
+    </div>
 
 
   );

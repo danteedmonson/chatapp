@@ -3,11 +3,14 @@ import { Button, IconButton, TextField, InputAdornment } from '@material-ui/core
 import { Add, Search } from '@mui/icons-material';
 import axios from 'axios';
 import { SocketContext } from '../../../App';
+import { RoomContext } from './RoomContext';
 
 
+interface RoomInterface {
+    _id: string, username: string, convo: string
+}
 
-
-export default function MessageHistory(props : any) {
+export default function PrivateMessages(props : any) {
     const [message, setMessage] = useState('');
     const [searchMode, setSearchMode] = useState(false);
     const [term, setTerm] = useState('')
@@ -15,6 +18,7 @@ export default function MessageHistory(props : any) {
     const [currentUser, setCurrentUser] = useState<any>(null)
     const [pfp, setPfp] = useState('undefinedpyvcfajcBlack_png')
     const socket = useContext(SocketContext);
+    const {setRoom} = useContext(RoomContext)
 
     // onlineUsers
     const [isOnline, setIsOnline] = useState("grey")
@@ -52,8 +56,10 @@ export default function MessageHistory(props : any) {
         }
     }
 
-    function handleMessageButton(room: any) {
-        props.setCurrentRoom(room)
+    function handleMessageButton({_id, username, convo}: RoomInterface) {
+
+        setRoom({_id, username, convo, type:"dm"})
+        console.table({_id, username, convo, type:"dm"})
         props.setMedia([])
         setSearchMode(false);
         setTerm("")
@@ -61,12 +67,12 @@ export default function MessageHistory(props : any) {
         setCurrentUser(null)
     }
 
-    function getMessages(room: any) {
-        props.setCurrentRoom(room)
+    function getMessages({_id, username, convo}: RoomInterface) {
+       
+        setRoom({_id, username, convo, type: "dm"})
+        console.table({_id, username, convo, type:"dm"})
         props.setMedia([])
-        socket.emit('chat-history', room.convo)
-
-
+        socket.emit('chat-history', convo)
     }
 
     if (currentUser) {
@@ -98,7 +104,7 @@ export default function MessageHistory(props : any) {
                         <div style={{ overflow: "auto", width: "100%", height: 250, maxHeight: 250, display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center" }}>
                             {
                                 props.chatPartners.map((element: any) =>
-                                    <Button id='searched-contacts' onClick={() => getMessages(element)}>
+                                    <Button key={element._id} id='searched-contacts' onClick={() => getMessages(element)}>
                                         <div
                                             style={{
                                                 width: "30px",
@@ -121,7 +127,7 @@ export default function MessageHistory(props : any) {
                             <div style={{ overflow: "auto", width: "100%", height: 250, maxHeight: 250, display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center" }}>
                                 {
                                     searchedUsers.map((element: any) =>
-                                        <Button id='searched-contacts' onClick={() => setCurrentUser(element)}>
+                                        <Button key={element._id} id='searched-contacts' onClick={() => setCurrentUser(element)}>
                                             <div
                                                 style={{
                                                     width: "30px",

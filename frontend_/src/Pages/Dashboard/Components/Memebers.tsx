@@ -60,7 +60,7 @@ export default function Members(props: any) {
 
         {
           props.members.map((element: any) =>
-            <Button id='searched-contacts' onClick={() => console.log(element)}>
+            <Button key={element._id} id='searched-contacts' onClick={() => console.log(element)}>
               <div
                 style={{
                   width: "30px",

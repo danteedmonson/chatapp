@@ -17,6 +17,8 @@ exports = module.exports = function (io, sessionStore) {
                 convoID,
             );
 
+            
+
             let memebers = await getPartners(
                 convoInfo.members,
                 sessionStore

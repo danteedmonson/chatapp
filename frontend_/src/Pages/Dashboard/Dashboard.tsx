@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
 import NavigationBar from './Components/NavigationBar';
-import SideBar from './Components/SideBar';
-import FileBar from './Components/FileBar';
-import InfoBar from './Components/InfoBar';
+import FileBar from './Components/Media';
+import InfoBar from './Components/Info';
 import './styles/styles.css'
 import MessageArea from './Components/MessageArea';
 import Members from './Components/Memebers';
 import { SocketContext } from '../../App';
-import MessageHistory from './Components/MessageHistory';
+import PrivateMessages from './Components/PrivateMessages';
 import Profile from './Components/Profile';
-import Groups from './Components/Groups';
+import GroupsArea from './Components/Groups';
+import { RoomProvider } from './Components/RoomContext'
 
 interface userInfo {
   chatPartner: {
@@ -20,23 +20,28 @@ interface userInfo {
     convo: string,
     connected: boolean
   },
+  group: {
+    _id: string[],
+    username: string,
+    convo: string
+  },
   myProfile: {
     customStatus: string,
     pfp: string,
     _id?: string,
   },
   media: {
-    _id:string, 
-    file:string, 
-    type:string
+    _id: string,
+    file: string,
+    type: string
   }[]
 
 }
 
 export default function Dashboard() {
-  const [onlineUsers, setOnlineUsers] = useState<{userID:string,connected:boolean}[]>([])
+  const [onlineUsers, setOnlineUsers] = useState<{ userID: string, connected: boolean }[]>([])
   const [chatPartners, setChatPartners] = useState<userInfo['chatPartner'][]>([])
-
+  const [groups, setGroups] = useState<userInfo['group'][]>([]);
   const [currentRoom, setCurrentRoom] = useState('');
   const [members, setMembers] = useState([]);
   const [myProfile, setMyProfile] = useState<userInfo['myProfile']>()
@@ -46,8 +51,6 @@ export default function Dashboard() {
   socket.on('connect', () => {
     console.log(socket.id); // x8WIv7-mJelg7on_ALbx
   });
-
-  console.log(media)
 
   useEffect(() => {
 
@@ -69,7 +72,7 @@ export default function Dashboard() {
     }
   }, [])
 
-  socket.on('session', ({ sessionID, userID }: {sessionID:string, userID: string}) => {
+  socket.on('session', ({ sessionID, userID }: { sessionID: string, userID: string }) => {
     // attach the session ID to the next reconnection attempts
     socket.auth = { sessionID };
     // store it in the localStorage
@@ -81,7 +84,7 @@ export default function Dashboard() {
 
   useEffect(() => {
 
-    socket.on('users', (users: {userID:string,connected:boolean}[]) => {
+    socket.on('users', (users: { userID: string, connected: boolean }[]) => {
       console.log(users)
 
       setOnlineUsers(users);
@@ -106,13 +109,11 @@ export default function Dashboard() {
 
     socket.emit('all-chat-partners')
 
-    socket.on('all-chat-partners', (user: userInfo['chatPartner'][]) => {
-      console.log(user)
-      setChatPartners(user);
-
-
-
-      
+    socket.on('all-chat-partners', (convos: { chatPartners: userInfo["chatPartner"][], groups: userInfo["group"][] }) => {
+      console.table(convos.chatPartners)
+      console.table(convos.groups)
+      setChatPartners(convos.chatPartners);
+      setGroups(convos.groups)
     })
 
 
@@ -123,12 +124,12 @@ export default function Dashboard() {
 
   useEffect(() => {
 
-    socket.on('user connected', (user: {userID:string,connected:boolean}) => {
+    socket.on('user connected', (user: { userID: string, connected: boolean }) => {
       console.log(user)
       let userStatus: HTMLElement | null = document.getElementById(user.userID)
       if (userStatus)
         userStatus.style.backgroundColor = 'green'
-      setOnlineUsers((prev: {userID:string,connected:boolean}[]) => [...prev, user])
+      setOnlineUsers((prev: { userID: string, connected: boolean }[]) => [...prev, user])
 
     })
 
@@ -140,23 +141,24 @@ export default function Dashboard() {
       let userStatus: HTMLElement | null = document.getElementById(user)
       if (userStatus)
         userStatus.style.backgroundColor = 'grey'
-      setOnlineUsers((prev: {userID:string,connected:boolean}[]) => prev.filter((value: {userID:string,connected:boolean}) => user != value.userID))
+      setOnlineUsers((prev: { userID: string, connected: boolean }[]) => prev.filter((value: { userID: string, connected: boolean }) => user != value.userID))
     })
   }, [])
 
 
-console.log(myProfile)
 
   return (
     <div id='dash'>
-      <NavigationBar />
-      <Profile  setMyProfile={setMyProfile}/>
-      <MessageHistory onlineUsers={onlineUsers} setMedia={setMedia} setCurrentRoom={setCurrentRoom} chatPartners={chatPartners}/>
-      <Groups />
-      <MessageArea currentRoom={currentRoom} setMedia={setMedia} socket={socket} setMembers={setMembers} myProfile={myProfile}/>
-      <InfoBar currentRoom={currentRoom} />
-      <FileBar media={media} />
-      <Members members={members} />
+      <RoomProvider>
+        
+        <Profile setMyProfile={setMyProfile} />
+        <PrivateMessages onlineUsers={onlineUsers} setMedia={setMedia} setCurrentRoom={setCurrentRoom} chatPartners={chatPartners} />
+        <GroupsArea setMedia={setMedia} setCurrentRoom={setCurrentRoom} groups={groups} />
+        <MessageArea currentRoom={currentRoom} setMedia={setMedia} socket={socket} members={members} setMembers={setMembers} myProfile={myProfile} />
+        <InfoBar currentRoom={currentRoom} />
+        <FileBar media={media} />
+        <Members members={members} />
+      </RoomProvider>
     </div>
   );
 }

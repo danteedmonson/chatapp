@@ -5,12 +5,14 @@ const messageSchema = new Schema({
   
     from:String,
     to:  String,
-    msg: Object
+    msg: Object,
+    mesType: String
   },{ versionKey: false });
   
   const conversationSchema = new Schema({
     members:Array,
     convoType: String,
+    name: String,
     content: [messageSchema],
     lastModified: Date
   },{ versionKey: false });

@@ -23,7 +23,6 @@ export default function NewMessage(props: mesProp) {
   let element: any = ""
 
   useEffect(()=>{
-
     
   },[])
 

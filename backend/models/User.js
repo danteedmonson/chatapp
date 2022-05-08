@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
     conversations: {
         type: Array,
         default: []
-    }
+    },
 })
 
 /* 

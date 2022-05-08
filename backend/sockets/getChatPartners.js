@@ -11,11 +11,10 @@ exports = module.exports = function (io, sessionStore) {
 
             // format the user message
 
-            // search for convo 
-            let chatPartners = await getPartners(
-                socket.userID,
-            );
-
+            // search for private messages 
+            let chatPartners = await getPartners(socket.userID);
+            // search for group messages
+            let groups = await getGroups(socket.userID);
             
             sessionStore.findAllSessions().forEach((session) => {
 
@@ -31,7 +30,7 @@ exports = module.exports = function (io, sessionStore) {
                 
             });
 
-            io.to(socket.userID).emit("all-chat-partners", chatPartners);
+            io.to(socket.userID).emit("all-chat-partners", {chatPartners, groups});
 
         });
     })
@@ -44,7 +43,6 @@ async function getPartners(from) {
                 _id: from,
             }
         );
-
 
         let partnersIds = []
         let partnerConvos = []
@@ -63,12 +61,31 @@ async function getPartners(from) {
             records[i] = { _id, username, pfp, customStatus, convo:  partnerConvos[i], connected: false }
         }
 
-
         return records;
-
     } catch (error) {
         console.log(error)
         return null
     }
 }
 
+async function getGroups(from) {
+    try {
+        let myProfile = await User.findOne(
+            {
+                _id: from,
+            }
+        );
+
+
+        const records = await Conversation.find({ '_id': { $in: myProfile.conversations } });        
+        for(let i=0; i < records.length; i++) {
+            let { _id, name } = records[i];
+            records[i] = { _id: _id, username: name, convo: _id}
+        }
+
+        return records;
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}

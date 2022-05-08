@@ -45,6 +45,7 @@ const { InMemorySessionStore } = require("./sessionStore");
 const sessionStore = new InMemorySessionStore();
 const getChatPartners = require('../sockets/getChatPartners')(io, sessionStore);
 const sendMessage = require('../sockets/sendMessage')(io);
+const createGroup = require('../sockets/createGroup')(io);
 const getChatHistory = require('../sockets/getChatHistory')(io, sessionStore);
 const pfp = require('../routes/pfp')(io);
 io.use((socket, next) => {

@@ -1,6 +1,6 @@
-$background-dark :  #181c2c;
-$background-light :  #202434;
-$primary : #FA7268;
+
+
+@import 'variables'; 
 
 @mixin gridPosition($cs, $ce, $rs, $re) {
     grid-column-start: $cs;
@@ -254,13 +254,16 @@ $primary : #FA7268;
 
 #dash {
     display: grid;
-    width: 100%;
-    grid-template-columns: repeat(8, 11vw);
-    grid-template-rows: repeat(6, 14vh);
-    gap: 24px;
+    width: 95%;
+    height: 95%;
+    max-width: 1728px;
+    max-height: 897.297px;
+    grid-template-columns: repeat(8, 11%);
+    grid-template-rows: repeat(6, 14%);
+    column-gap: 1.71%;
+    row-gap: 3.2%;
     background-color: $background-dark;
     color:white;
-    padding-bottom: 3vh;
   }
 
   #searched-contacts {

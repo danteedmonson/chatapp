@@ -384,15 +384,19 @@
 #dash {
   display: -ms-grid;
   display: grid;
-  width: 100%;
-  -ms-grid-columns: (11vw)[8];
-      grid-template-columns: repeat(8, 11vw);
-  -ms-grid-rows: (14vh)[6];
-      grid-template-rows: repeat(6, 14vh);
-  gap: 24px;
+  width: 95%;
+  height: 95%;
+  max-width: 1728px;
+  max-height: 897.297px;
+  -ms-grid-columns: (11%)[8];
+      grid-template-columns: repeat(8, 11%);
+  -ms-grid-rows: (14%)[6];
+      grid-template-rows: repeat(6, 14%);
+  -webkit-column-gap: 1.71%;
+          column-gap: 1.71%;
+  row-gap: 3.2%;
   background-color: #181c2c;
   color: white;
-  padding-bottom: 3vh;
 }
 
 #searched-contacts {
